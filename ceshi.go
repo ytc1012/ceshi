@@ -3,9 +3,11 @@ package main
 import "fmt"
 
 func main() {
-    x, y, z, n := 1, 1, 1, 4
+    x, y, z, n := 2, 3, 5, 19
     FindSolution(x, y, z, n)
 }
+
+//有x张10元、y张5元、z张2元，购物n元，不找零，能否正好？如果能各需要几张？
 
 func FindSolution(x int, y int , z int, n int ) {
     total := x * 10 + y * 5 + z * 2
@@ -52,8 +54,8 @@ func FindSolution(x int, y int , z int, n int ) {
                     fmt.Println("不能刚好凑齐", n, "元")
                 }
             } else if (n % 5) % 2 == 0 && z >= 1 {
-                if n/10 <= x && (n % 10)/5 <= y && (n % 5)/2 <= z {
-                    if isEqual(n/10, (n % 5)/5, (n % 5)/2, n) {
+                if n/10 <= x && (n % 10)/5 <= y && (n % 10)/2 <= z {
+                    if isEqual(x, y, z, n) {
                         fmt.Println("需要", n/10, "张十元纸币，", (n % 10)/5, "张五元纸币，", (n % 5)/2, "张两元纸币，", "刚好可凑齐", n, "元")
                     } else {
                         fmt.Println("不能刚好凑齐", n, "元")
@@ -70,6 +72,14 @@ func FindSolution(x int, y int , z int, n int ) {
                     } else {
                         fmt.Println("不能刚好凑齐", n, "元")
                     }
+                }
+            }else if (n % 10) % 2 == 0 && z >= 1 {
+                if n/10 <= x && (n % 10)/2 <= z {
+                    fmt.Println("需要", n/10, "张十元纸币，", "0张五元纸币，", (n % 10)/2, "张两元纸币，", "刚好可凑齐", n, "元")
+                } else if n/10 > x && (n - 10*x)/5 <= y && (n % 10)/2 <= z {
+                    fmt.Println("需要", x, "张十元纸币，", (n/10 - x)*2, "张五元纸币，", (n % 10)/2, "张两元纸币，", "刚好可凑齐", n, "元")
+                } else {
+                    fmt.Println("不能刚好凑齐", n, "元")
                 }
             } else {
                 fmt.Println("不能刚好凑齐", n, "元")
